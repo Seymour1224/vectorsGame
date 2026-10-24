@@ -4,9 +4,11 @@ public class Driver {
 
 	public static void main(String[] args) {
 		
-		Vectors game = new Vectors();
 		
-		game.show();
+		
+		Vectors game = new Vectors(5);
+		
+		game.run();
 
 	}
 
