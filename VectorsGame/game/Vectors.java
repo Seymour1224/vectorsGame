@@ -7,14 +7,14 @@ public class Vectors {
 	protected int playerPoints, comPoints;
 	protected Scanner scan = new Scanner(System.in);
 	protected char[][] board = 
-			   {{'x','x','x','x','x','x','x','x'},
-				{' ',' ','x',' ',' ','x',' ','x'},
-				{' ',' ','x',' ',' ','x',' ','x'},
-				{' ',' ','x','x','x','x',' ',' '},
-				{' ',' ','x',' ',' ','x',' ',' '},
-				{' ',' ',' ',' ',' ','x',' ',' '},
-				{' ',' ',' ',' ',' ','x',' ',' '},
-				{' ',' ',' ',' ',' ','x',' ',' '}};
+			   {{' ',' ',' ',' ',' ',' ',' ',' '},
+				{' ',' ',' ',' ',' ',' ',' ',' '},
+				{' ',' ',' ',' ',' ',' ',' ',' '},
+				{' ',' ',' ',' ',' ',' ',' ',' '},
+				{' ',' ',' ',' ',' ',' ',' ',' '},
+				{' ',' ',' ',' ',' ',' ',' ',' '},
+				{' ',' ',' ',' ',' ',' ',' ',' '},
+				{' ',' ',' ',' ',' ',' ',' ',' '}};
 	
 	Vectors(){
 		this.rounds = 20;
@@ -111,6 +111,8 @@ public class Vectors {
 		char player='x';
 		allScore = horizontal(allScore,player);
 		allScore = vertical(allScore,player);
+		allScore = rightDiagnal(allScore,player);
+		allScore = leftDiagnal(allScore,player);
 		
 		return allScore;
 	}
@@ -140,20 +142,52 @@ public class Vectors {
 	}
 	
 	
-	public void rightDiagnal() {//  NOT DONE  !!!  CHANGE
-		int index,jindex;
-		char[] temp = new char[8];
+	public int rightDiagnal(int score, char player) {//  NOT DONE  !!!  CHANGE
+		int index,jindex,bindex;
+		char[] temp = {' ',' ',' ',' ',' ',' ',' ',' '};
+		int[] idk = {3,4,5,6,7,8,7,6,5,4,3};
+		int x=0,y=5;
 		
-		for(index=0;index<this.board.length;index++) {
-			for(jindex=0;jindex<this.board.length;jindex++) {
-				temp[jindex] = this.board[jindex][jindex];
+		
+		for(index=0;index<idk.length;index++) {
+			for(jindex=0;jindex<idk[index];jindex++) {
+				temp[jindex] = this.board[y+jindex][x+jindex];
+			}
+			score += score(temp,player);
+			for(bindex=0;bindex<temp.length;bindex++) {
+				temp[bindex] = ' ';
+			}
+			if(y>0) {
+				y--;
+			}else if(y==0) {
+				x++;
 			}
 		}
-		
+		return score;
 	}
 	
-	public void leftDiagnal() {
+	public int leftDiagnal(int score, char player) {
+		int index,jindex,bindex;
+		char[] temp = {' ',' ',' ',' ',' ',' ',' ',' '};
+		int[] idk = {3,4,5,6,7,8,7,6,5,4,3};
+		int x=7,y=5;
 		
+		
+		for(index=0;index<idk.length;index++) {
+			for(jindex=0;jindex<idk[index];jindex++) {
+				temp[jindex] = this.board[y+jindex][x-jindex];
+			}
+			score += score(temp,player);
+			for(bindex=0;bindex<temp.length;bindex++) {
+				temp[bindex] = ' ';
+			}
+			if(y>0) {
+				y--;
+			}else if(y==0) {
+				x--;
+			}
+		}
+		return score;
 	}
 	
 	//  scoring^
