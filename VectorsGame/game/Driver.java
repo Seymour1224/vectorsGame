@@ -8,8 +8,10 @@ public class Driver {
 		
 		Vectors game = new Vectors(5);
 		
-		game.run();
+		//game.run();
 
+		//char[] h = {'x','x','x','x','x','x','x','x'};
+		System.out.println(game.allScore());
 	}
 
 }
