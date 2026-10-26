@@ -1,10 +1,17 @@
 package game;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Vectors {
-	protected int rounds;
-	protected int playerPoints, comPoints;
+	protected int rounds, round=0;
+	protected int playerPoints=0, comPoints=0;
+	protected int highScore;
+	protected String name = "Colby";
 	protected Scanner scan = new Scanner(System.in);
 	protected char[][] board = 
 			   {{' ',' ',' ',' ',' ',' ',' ',' '},
@@ -15,25 +22,46 @@ public class Vectors {
 				{' ',' ',' ',' ',' ',' ',' ',' '},
 				{' ',' ',' ',' ',' ',' ',' ',' '},
 				{' ',' ',' ',' ',' ',' ',' ',' '}};
+	private ComputerPlayer randy = new ComputerPlayer();
 	
 	Vectors(){
 		this.rounds = 20;
 	}
 	Vectors(int rounds){
-		if(rounds > 32) {  //i think any at 32 rounds the board would be filled
+		if(rounds > 32) {  //i think at 32 rounds the board would be filled
 			rounds = 32;   // 8x8 board = 64 tiles  2 tiles fill each round so 32 rounds
 		}
 		this.rounds = rounds;
 	}
 	
 	
-	public void run() {
-		show();
-		for(this.rounds=this.rounds-1; this.rounds>=0;this.rounds--) {
-			playerTurn();
-			show();
-			System.out.println("      "+this.rounds+" left");
+	public void run() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("highscore.txt"));
+		String temp = br.readLine();
+		if(temp == null) {
+			this.highScore = 0;
+		}else {
+			this.highScore = Integer.parseInt(temp);
 		}
+		br.close();
+		show();
+		for(this.round=this.round+1; this.rounds>=this.round;this.round++) {
+			playerTurn();
+			int[] randy = this.randy.randomComp();
+			while(spotCheck(randy[1], randy[0])) {
+				randy = this.randy.randomComp();
+			}
+			this.board[randy[0]][randy[1]] = 'c';
+			this.playerPoints += allScore('x');
+			this.comPoints += allScore('c');
+			show();
+		}
+		if(this.highScore < this.playerPoints-this.comPoints) {
+			this.highScore = this.playerPoints-this.comPoints;
+		}
+		BufferedWriter bw = new BufferedWriter(new FileWriter("highscore.txt"));
+		bw.write(this.highScore+"");
+		bw.close();
 	}
 	
 	public void playerTurn() {
@@ -106,9 +134,8 @@ public class Vectors {
 		return score;
 	}
 	
-	public int allScore() {// will run horiz vert and diagnal
+	public int allScore(char player) {
 		int allScore=0;
-		char player='x';
 		allScore = horizontal(allScore,player);
 		allScore = vertical(allScore,player);
 		allScore = rightDiagnal(allScore,player);
@@ -192,17 +219,35 @@ public class Vectors {
 	
 	//  scoring^
 	
-	
-	public void show() {
-		int index,index1;
-		System.out.print(" 0  1  2  3  4  5  6  7\n");
-		for(index=0; index < this.board.length; index++) {
-			for(index1=0; index1 < this.board[0].length; index1++) {
-				System.out.printf("[%c]", this.board[index][index1]);
-			}
-			
-			System.out.println(" "+index);
+	public void showRow(char[] row) {
+		int index;
+		for(index=0; index < row.length; index++) {
+			System.out.print("| "+row[index]+" ");
 		}
+		System.out.print("| ");
+	}
+	public void show() {
+		int index;
+		
+		System.out.println("*********************************");
+		System.out.println("- V E C T E R S\t\t\t*");
+		System.out.println("*********************************");
+		System.out.printf("- High Score:  %s - %d\t*\n",this.name,this.highScore);
+		System.out.println("*********************************");
+		System.out.printf("- Player Score: %d\t\t*\n",this.playerPoints);
+		System.out.printf("- Computer Score: %d\t\t*\n",this.comPoints);
+		System.out.println("*********************************");
+		System.out.printf("- Turn %d of %d\t\t\t*\n",this.round,this.rounds);
+		System.out.println("*********************************");
+		System.out.println("  0   1   2   3   4   5   6   7");
+		System.out.println("---------------------------------");
+		for(index=0;index<this.board.length;index++) {
+			showRow(this.board[index]);
+			System.out.printf("%d\n",index);
+			System.out.println("---------------------------------");
+		}
+		
+		
 	}
 }
 

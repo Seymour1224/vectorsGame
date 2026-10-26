@@ -1,17 +1,15 @@
 package game;
 
+import java.io.IOException;
+
 public class Driver {
 
-	public static void main(String[] args) {
-		
-		
+	public static void main(String[] args) throws IOException {
 		
 		Vectors game = new Vectors(5);
 		
-		//game.run();
+		game.run();
 
-		//char[] h = {'x','x','x','x','x','x','x','x'};
-		System.out.println(game.allScore());
 	}
 
 }
