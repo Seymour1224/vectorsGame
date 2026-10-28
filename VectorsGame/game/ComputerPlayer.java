@@ -9,7 +9,6 @@ public class ComputerPlayer {
 	private char[][] boardCopy;
 	private int[][] happyBoard;
 	private int[] happiest = {0,0};
-	//private Vectors vect = new Vectors();
 	
 	
 	ComputerPlayer(){}
@@ -65,18 +64,44 @@ public class ComputerPlayer {
 		
 		for(yindex=0; yindex<board.length;yindex++) {
 			for(indexx=0; indexx<board[yindex].length;indexx++) {
-				//if(vect.spotCheck(yindex,indexx)) {
-					//this.happyBoard[indexx][yindex] = -1;
-				//}
+				if(spotCheck(indexx,yindex,board)) {
+					this.happyBoard[yindex][indexx] = -1;
+				}
 			}
 		}
 		
 		
 	}
 	
+	public boolean spotCheck(int x,int y, char[][] board) {
+		boolean filled = false;
+		if(board[y][x] != ' ') {
+			filled = true;
+		}
+		return filled;
+	}
 	
-	
-	
+	public void show() {
+		int index,yindex;
+		
+		System.out.println("Board Copy");
+		
+		for(yindex=0;yindex<this.boardCopy.length;yindex++) {
+			for(index=0;index<this.boardCopy.length;index++) {
+				System.out.printf("[%c]", this.boardCopy[yindex][index]);
+			}
+			System.out.println("");
+		}
+		
+		System.out.println("\n\n\n\n\nBoard Happy");
+		
+		for(yindex=0;yindex<this.boardCopy.length;yindex++) {
+			for(index=0;index<this.boardCopy.length;index++) {
+				System.out.printf("[%d]", this.happyBoard[yindex][index]);
+			}
+			System.out.println("");
+		}
+	}
 	
 	
 	
