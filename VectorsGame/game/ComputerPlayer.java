@@ -69,9 +69,18 @@ public class ComputerPlayer {
 				}
 			}
 		}
-		
-		
 	}
+	
+	public int mineSweeper(int[][] board) {
+		int count=0;
+		
+		
+		
+		
+		return count;
+	}
+	
+	
 	
 	public boolean spotCheck(int x,int y, char[][] board) {
 		boolean filled = false;
