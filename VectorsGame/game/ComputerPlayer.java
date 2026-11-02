@@ -69,11 +69,24 @@ public class ComputerPlayer {
 				}
 			}
 		}
+		
+		
 	}
 	
 	public int mineSweeper(int[][] board) {
 		int count=0;
+		int indexx,yindex;
 		
+		for(indexx=1;indexx<board.length-1;indexx++) {
+			for(yindex=1;yindex<board[indexx].length-1;yindex++) {
+				
+				//count -1 in tiles next to point
+				
+				
+				
+				
+			}
+		}
 		
 		
 		
