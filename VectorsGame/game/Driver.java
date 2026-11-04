@@ -21,7 +21,7 @@ public class Driver {
 		
 		int[] move = hether.runHH(happy);
 		hether.show();
-		System.out.printf("%d %d",move[0],move[1]);
+		System.out.printf("%d %d",move[1],move[0]);
 		
 		
 	}

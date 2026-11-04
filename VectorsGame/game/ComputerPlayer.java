@@ -32,7 +32,6 @@ public class ComputerPlayer {
 		intialHappiness(board);
 		move = move();
 		System.out.printf("%d  %d's%n",happiest.length,happyBoard[happiest[0][0]][happiest[0][1]]);
-		
 		return move;
 	}
 	
@@ -158,6 +157,8 @@ public class ComputerPlayer {
 						temp[index][0] = this.happiest[index][0];
 						temp[index][1] = this.happiest[index][1];
 					}
+					temp[temp.length-1][0] = yindex;
+					temp[temp.length-1][1] = indexx;
 					this.happiest = temp;
 				}
 			}
