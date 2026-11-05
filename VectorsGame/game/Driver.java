@@ -10,14 +10,14 @@ public class Driver {
 		ComputerPlayer hether = new ComputerPlayer();
 		//game.run();
 		char[][] happy = 
-		       {{' ',' ',' ','h',' ',' ',' ',' '},
+		       {{' ',' ',' ','c','c',' ',' ',' '},
 				{' ',' ',' ',' ',' ',' ',' ',' '},
 				{' ',' ',' ',' ',' ',' ',' ',' '},
 				{' ',' ',' ',' ',' ',' ',' ',' '},
 				{' ',' ',' ',' ',' ',' ',' ',' '},
 				{' ',' ',' ',' ',' ',' ',' ',' '},
-				{' ',' ',' ',' ',' ',' ',' ',' '}, 
-				{' ',' ',' ',' ',' ',' ',' ',' '}};
+				{' ',' ',' ',' ',' ',' ',' ','x'}, 
+				{' ',' ',' ',' ',' ',' ',' ','x'}};
 		
 		
 		
@@ -30,9 +30,10 @@ public class Driver {
 			System.out.printf("{%d %d}  ",hether.getHappiest()[index][1],hether.getHappiest()[index][0]);
 		}
 		*/
-		hether.scoreMove();
+		//hether.scoreMove();
+		System.out.printf("%d %d%n",move[1],move[0]);
 		hether.show();
-		
+		//hether.scoreMove();
 		
 		
 		

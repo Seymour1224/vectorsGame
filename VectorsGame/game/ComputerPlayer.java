@@ -37,6 +37,7 @@ public class ComputerPlayer {
 		copy(board);
 		int[] move = {0,0};
 		intialHappiness(board);
+		scoreMove();
 		move = move();
 		//System.out.printf("%d  %d's%n",happiest.length,happyBoard[happiest[0][0]][happiest[0][1]]);
 		return move;
@@ -147,21 +148,42 @@ public class ComputerPlayer {
 		int yindex,indexx;
 		
 		for(yindex=0;yindex<this.boardCopy.length;yindex++) {
+			//System.out.println("");
 			for(indexx=0;indexx<this.boardCopy[yindex].length;indexx++) {
 				if(!spotCheck(indexx,yindex,this.boardCopy)) {
 					char tempChar = this.boardCopy[yindex][indexx];
 					this.boardCopy[yindex][indexx] = 'c';
 					
 					int score = allScore('c');
-					
+					//System.out.printf("The all score is  %d   for (y:x) %d %d%n", score, yindex, indexx);
+					if(score>0) {
+						score+=2;
+					}
+					this.happyBoard[yindex][indexx] += score;
 					
 					this.boardCopy[yindex][indexx] = tempChar;
 				}
 			}
 		}
 		
-		
-		
+		for(yindex=0;yindex<this.boardCopy.length;yindex++) {
+			//System.out.println("");
+			for(indexx=0;indexx<this.boardCopy[yindex].length;indexx++) {
+				if(!spotCheck(indexx,yindex,this.boardCopy)) {
+					char tempChar = this.boardCopy[yindex][indexx];
+					this.boardCopy[yindex][indexx] = 'x';
+					
+					int score = allScore('x');
+					//System.out.printf("The all score is  %d   for (y:x) %d %d%n", score, yindex, indexx);
+					if(score>0) {
+						score+=1;
+					}
+					this.happyBoard[yindex][indexx] += score;
+					
+					this.boardCopy[yindex][indexx] = tempChar;
+				}
+			}
+		}
 		
 	}
 	
