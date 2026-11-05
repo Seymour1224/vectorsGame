@@ -14,6 +14,13 @@ public class ComputerPlayer {
 	ComputerPlayer(){}
 	
 	
+	public int[][] getHappiest(){
+		return this.happiest;
+	}
+	
+	
+	
+	
 	
 	//         RANDY RANDOM
 	
@@ -31,7 +38,7 @@ public class ComputerPlayer {
 		int[] move = {0,0};
 		intialHappiness(board);
 		move = move();
-		System.out.printf("%d  %d's%n",happiest.length,happyBoard[happiest[0][0]][happiest[0][1]]);
+		//System.out.printf("%d  %d's%n",happiest.length,happyBoard[happiest[0][0]][happiest[0][1]]);
 		return move;
 	}
 	
@@ -136,6 +143,34 @@ public class ComputerPlayer {
 	
 	
 	
+	public void scoreMove() {
+		int yindex,indexx;
+		
+		for(yindex=0;yindex<this.boardCopy.length;yindex++) {
+			for(indexx=0;indexx<this.boardCopy[yindex].length;indexx++) {
+				if(!spotCheck(indexx,yindex,this.boardCopy)) {
+					char tempChar = this.boardCopy[yindex][indexx];
+					this.boardCopy[yindex][indexx] = 'c';
+					
+					int score = allScore('c');
+					
+					
+					this.boardCopy[yindex][indexx] = tempChar;
+				}
+			}
+		}
+		
+		
+		
+		
+	}
+	
+
+	
+	
+	
+	
+	
 	
 	///   HAPPY MOVE
 	
@@ -166,7 +201,7 @@ public class ComputerPlayer {
 		
 		int num = rand.nextInt(this.happiest.length);
 		happyMove[0] = this.happiest[num][0];
-		happyMove[1] = this.happiest[num][1];     //TEST THIS
+		happyMove[1] = this.happiest[num][1];
 		
 		
 		return happyMove;
@@ -201,7 +236,11 @@ public class ComputerPlayer {
 			System.out.println("");
 		}
 		
-		System.out.println("\n\n\n\n\nBoard Happy");
+		
+		System.out.println("\n");
+		
+		
+		System.out.println("Board Happy");
 		
 		for(yindex=0;yindex<this.boardCopy.length;yindex++) {
 			for(index=0;index<this.boardCopy.length;index++) {
@@ -216,6 +255,164 @@ public class ComputerPlayer {
 			}
 			System.out.println("");
 		}
+	}
+	
+	public void showHappyBoard() {
+		int index,yindex;
+		
+		System.out.println("Board Happy");
+		
+		for(yindex=0;yindex<this.boardCopy.length;yindex++) {
+			for(index=0;index<this.boardCopy.length;index++) {
+				if(this.happyBoard[yindex][index] == -1) {
+					System.out.printf("{-}");
+				}else if(this.happyBoard[yindex][index]==0) {
+					System.out.printf(" %d ",this.happyBoard[yindex][index]);
+				}else {
+					System.out.printf("[%d]", this.happyBoard[yindex][index]);
+				}
+				
+			}
+			System.out.println("");
+		}
+	}
+	
+	public void showBoardCopy() {
+		int index,yindex;
+		
+		System.out.println("Board Copy");
+		
+		for(yindex=0;yindex<this.boardCopy.length;yindex++) {
+			for(index=0;index<this.boardCopy.length;index++) {
+				System.out.printf("[%c]", this.boardCopy[yindex][index]);
+			}
+			System.out.println("");
+		}
+	}
+	
+	
+	
+	
+	public int[] scoring(char[] check, char player, int index) {
+		int count=0;
+		boolean start=false;
+		
+		for(index=index+0;index<check.length;index++) {
+			if(player == check[index]) {
+				count++;
+				start=true;
+			}else if(start) {
+				break;
+			}
+		}
+		int[] feedback = {count,index};
+		return feedback;
+	}
+	
+	public int score(char[] check, char player) {
+		int index=0,breakCount=0,count=0,score=0;
+		int[] back;
+		
+		while(index!=check.length && breakCount<10) {
+			back = scoring(check,player,index);
+			count = back[0];
+			index = back[1];
+			breakCount++;
+			if(count==8) {
+				score+=14;
+			}else if(count>=5) {
+				score+=10;
+			}else if(count==4) {
+				score+=6;
+			}else if(count==3) {
+				score+=4;
+			}
+		}
+		
+		return score;
+	}
+	
+	public int allScore(char player) {
+		int allScore=0;
+		allScore = horizontal(allScore,player);
+		allScore = vertical(allScore,player);
+		allScore = rightDiagnal(allScore,player);
+		allScore = leftDiagnal(allScore,player);
+		
+		return allScore;
+	}
+	
+	
+	public int horizontal(int score,char player) {
+		int index=0;
+		
+		for(index=0;index<this.boardCopy.length;index++) {
+			score += score(this.boardCopy[index],player);
+		}
+		return score;
+	}
+	
+	
+	public int vertical(int score,char player) {
+		int index=0,jindex=0;
+		char[] temp = new char[8];
+		
+		for(index=0;index<this.boardCopy.length;index++) {
+			for(jindex=0;jindex<this.boardCopy.length;jindex++) {
+				temp[jindex] = this.boardCopy[jindex][index];
+			}
+			score += score(temp,player);
+		}
+		return score;
+	}
+	
+	
+	public int rightDiagnal(int score, char player) {//  NOT DONE  !!!  CHANGE
+		int index,jindex,bindex;
+		char[] temp = {' ',' ',' ',' ',' ',' ',' ',' '};
+		int[] idk = {3,4,5,6,7,8,7,6,5,4,3};
+		int x=0,y=5;
+		
+		
+		for(index=0;index<idk.length;index++) {
+			for(jindex=0;jindex<idk[index];jindex++) {
+				temp[jindex] = this.boardCopy[y+jindex][x+jindex];
+			}
+			score += score(temp,player);
+			for(bindex=0;bindex<temp.length;bindex++) {
+				temp[bindex] = ' ';
+			}
+			if(y>0) {
+				y--;
+			}else if(y==0) {
+				x++;
+			}
+		}
+		return score;
+	}
+	
+	public int leftDiagnal(int score, char player) {
+		int index,jindex,bindex;
+		char[] temp = {' ',' ',' ',' ',' ',' ',' ',' '};
+		int[] idk = {3,4,5,6,7,8,7,6,5,4,3};
+		int x=7,y=5;
+		
+		
+		for(index=0;index<idk.length;index++) {
+			for(jindex=0;jindex<idk[index];jindex++) {
+				temp[jindex] = this.boardCopy[y+jindex][x-jindex];
+			}
+			score += score(temp,player);
+			for(bindex=0;bindex<temp.length;bindex++) {
+				temp[bindex] = ' ';
+			}
+			if(y>0) {
+				y--;
+			}else if(y==0) {
+				x--;
+			}
+		}
+		return score;
 	}
 	
 	
