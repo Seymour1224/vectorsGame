@@ -47,13 +47,13 @@ public class Vectors {
 		show();
 		for(this.round=this.round+1; this.rounds>=this.round;this.round++) {
 			playerTurn();
-			int[] randy = this.randy.runHH(this.board);
+			int[] comp = this.randy.runHH(this.board);
 			/*
 			while(spotCheck(randy[1], randy[0])) {
-				randy = this.randy.randomComp();
+				comp = this.randy.randomComp();
 			}
 			*/
-			this.board[randy[0]][randy[1]] = 'c';
+			this.board[comp[0]][comp[1]] = 'c';
 			this.playerPoints += allScore('x');
 			this.comPoints += allScore('c');
 			show();

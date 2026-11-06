@@ -157,7 +157,7 @@ public class ComputerPlayer {
 					int score = allScore('c');
 					//System.out.printf("The all score is  %d   for (y:x) %d %d%n", score, yindex, indexx);
 					if(score>0) {
-						score+=2;
+						score+=4;
 					}
 					this.happyBoard[yindex][indexx] += score;
 					
@@ -176,7 +176,7 @@ public class ComputerPlayer {
 					int score = allScore('x');
 					//System.out.printf("The all score is  %d   for (y:x) %d %d%n", score, yindex, indexx);
 					if(score>0) {
-						score+=1;
+						score+=2;
 					}
 					this.happyBoard[yindex][indexx] += score;
 					

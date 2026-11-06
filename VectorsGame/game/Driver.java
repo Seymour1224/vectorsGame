@@ -6,11 +6,14 @@ public class Driver {
 
 	public static void main(String[] args) throws IOException {
 		
-		Vectors game = new Vectors(5);
+		Vectors game = new Vectors();
 		ComputerPlayer hether = new ComputerPlayer();
-		//game.run();
+		game.run();
+		
+		/**
+		
 		char[][] happy = 
-		       {{' ',' ',' ','c','c',' ',' ',' '},
+		       {{' ',' ',' ','c','c','c',' ',' '},
 				{' ',' ',' ',' ',' ',' ',' ',' '},
 				{' ',' ',' ',' ',' ',' ',' ',' '},
 				{' ',' ',' ',' ',' ',' ',' ',' '},
@@ -31,8 +34,8 @@ public class Driver {
 		}
 		*/
 		//hether.scoreMove();
-		System.out.printf("%d %d%n",move[1],move[0]);
-		hether.show();
+		//System.out.printf("%d %d%n",move[1],move[0]);
+		//hether.show();
 		//hether.scoreMove();
 		
 		
